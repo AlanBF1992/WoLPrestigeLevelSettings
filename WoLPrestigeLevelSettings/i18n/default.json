@@ -1,0 +1,7 @@
+{
+  "profession-config-title": "Profession Unlock Config",
+  "profession-unlock-prestige-1": "Level for first prestige",
+  "profession-unlock-prestige-2": "Level for second prestige",
+  "profession-unlock-prestige-warning": "Make sure that the second is greater than the first",
+  "profession-unlock-prestige-reset": "The Second Prestige has to unlock after the first. Values Reset."
+}

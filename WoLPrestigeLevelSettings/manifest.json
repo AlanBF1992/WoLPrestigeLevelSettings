@@ -1,0 +1,17 @@
+{
+  "Name": "WoL Prestige Level Settings",
+  "Author": "AlanBF",
+  "Version": "1.0.0",
+  "Description": "Add a Prestige Level Chooser for WoL",
+  "UniqueID": "AlanBF.WoLPrestigeLevelSettings",
+  "EntryDll": "WoLPrestigeLevelSettings.dll",
+  "MinimumApiVersion": "4.1.10",
+  "UpdateKeys": [ "Nexus:36949" ],
+  "Dependencies": [
+    {
+      "UniqueID": "DaLion.Professions",
+      "MinimumVersion": "1.3.4",
+      "IsRequired": true
+    }
+  ]
+}

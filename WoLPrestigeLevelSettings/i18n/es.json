@@ -1,0 +1,7 @@
+{
+  "profession-config-title": "Desbloqueo de profesiones",
+  "profession-unlock-prestige-1": "Nivel del primer prestigio ",
+  "profession-unlock-prestige-2": "Nivel del segundo prestigio",
+  "profession-unlock-prestige-warning": "Asegúrate que el segundo sea mayor al primero",
+  "profession-unlock-prestige-reset": "El segundo prestigio debe ocurrir luego del primero. Niveles reiniciados."
+}
