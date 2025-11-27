@@ -3,6 +3,7 @@ using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley.Menus;
 using WoLPrestigeLevelSettings.Compatibility.GMCM;
+using WoLPrestigeLevelSettings.Compatibility.MasteryExtended;
 using WoLPrestigeLevelSettings.Patches.WoL;
 
 namespace WoLPrestigeLevelSettings
@@ -20,6 +21,7 @@ namespace WoLPrestigeLevelSettings
 
         /// <summary>The mod configuration from the player.</summary>
         public static ModConfig Config { get; internal set; } = null!;
+
         public override void Entry(IModHelper helper)
         {
             LogMonitor = Monitor;
@@ -31,6 +33,11 @@ namespace WoLPrestigeLevelSettings
             helper.Events.GameLoop.GameLaunched += GMCMConfigVanilla;
 
             Patches(harmony);
+
+            if (ModHelper.ModRegistry.IsLoaded("AlanBF.MasteryExtended"))
+            {
+                MELoader.Loader(helper, harmony);
+            }
         }
 
         public static void Patches(Harmony harmony)
@@ -78,7 +85,14 @@ namespace WoLPrestigeLevelSettings
             configMenu.AddNumberOption(
                 mod: ModManifest,
                 getValue: () => Config.FirstPrestigeLevel,
-                setValue: (value) => Config.FirstPrestigeLevel = value,
+                setValue: (value) =>
+                {
+                    if (ModHelper.ModRegistry.IsLoaded("AlanBF.MasteryExtended"))
+                    {
+                        MELoader.adjustLevels(Config.FirstPrestigeLevel, value);
+                    }
+                    Config.FirstPrestigeLevel = value;
+                },
                 name: () => ModHelper.Translation.Get("profession-unlock-prestige-1"),
                 tooltip: () => "Default: 15",
                 min: 11,
@@ -93,12 +107,23 @@ namespace WoLPrestigeLevelSettings
                 {
                     if (value <= Config.FirstPrestigeLevel)
                     {
+                        if(ModHelper.ModRegistry.IsLoaded("AlanBF.MasteryExtended"))
+                        {
+                            MELoader.adjustLevels(Config.FirstPrestigeLevel, 15);
+                            MELoader.adjustLevels(Config.SecondPrestigeLevel, 20);
+                        }
+
                         Config.FirstPrestigeLevel = 15;
                         Config.SecondPrestigeLevel = 20;
                         LogMonitor.Log(ModHelper.Translation.Get("profession-unlock-prestige-reset"), LogLevel.Warn);
+
                     }
                     else
                     {
+                        if (ModHelper.ModRegistry.IsLoaded("AlanBF.MasteryExtended"))
+                        {
+                            MELoader.adjustLevels(Config.SecondPrestigeLevel, value);
+                        }
                         Config.SecondPrestigeLevel = value;
                     }
                 },
